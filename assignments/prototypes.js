@@ -8,6 +8,62 @@
   Each constructor function has unique properties and methods that are defined in their block comments below:
 */
   
+// CONSTRUCTOR EXAMPLE
+function Parent(parentAttribs){
+  this.age = parentAttribs.age;
+  this.location = parentAttribs.location;
+  this.name = parentAttribs.name;
+  this.phrase = parentAttribs.phrase;
+}
+
+const oldestPerson = {
+  age: 99,
+  location: 'street',
+  name: 'Carlos',
+  phrase: `Hello there Carlos.`
+};
+
+
+const mediumPerson = {
+  age: 50,
+  location: 'church',
+  name: 'Barry',
+  phrase: `What's up I'm Barry.`
+};
+
+const man = new Parent(oldestPerson);
+const cousin = new Parent(mediumPerson);
+
+console.log(man);
+console.log(cousin);
+
+// INHERITANCE EXAMPLE
+function Child(childAttribs) {
+  Parent.call(this, childAttribs);
+  this.toy = childAttribs.toy;
+  console.log(this);
+}
+
+Child.prototype = Object.create(Parent.prototype);
+Child.prototype.play = function() {
+  return `${this.name} plays with her ${this.toy}.`;
+}
+
+const dory = new Child({
+  age: 2,
+  location: 'daycare',
+  name: 'Dory',
+  phrase: `Waa waa.`,
+  toy: 'rattle'
+
+});
+
+console.log(dory);
+console.log(dory.play());
+
+//////////////////////////////////////////////////////
+
+
 /*
   === GameObject ===
   * createdAt
@@ -41,7 +97,53 @@
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+// GameObject Constructor
+function GameObject(gameAttributes) {
+    this.createdAt = gameAttributes.createdAt;
+    this.name = gameAttributes.name;
+    this.dimensions = gameAttributes.dimensions;
+}
+
+// method for GameObject
+GameObject.prototype.destroy = function () {
+  return `${this.name} was removed from the game.`
+}
+
+// CharacterStats Constructor
+function CharacterStats(characterAttributes) {
+  this.healthPoints = characterAttributes.healthPoints;
+  GameObject.call(this, CharacterStats);
+}
+
+// Inheritance I
+CharacterStats.prototype = Object.create(GameObject.prototype);
+
+// method for CharacterStats
+CharacterStats.prototype.takeDamage = function () {
+  return `${this.name} took damage.`
+}
+
+// Humanoid Constructor
+function Humanoid(humanAttributes) {
+  this.team = humanAttributes.team;
+  this.weapons = humanAttributes.weapons;
+  this.language = humanAttributes.language;
+  CharacterStats.call(this, humanAttributes);
+}
+
+// Inheritance II
+Humanoid.prototype = Object.create(CharacterStats.prototype);
+
+// method for Humanoid
+Humanoid.prototype.greet = function (){
+  return `${this.name} offers a greeting in ${this.language}.`
+};
+
+const date = {
+  today: `today is `
+}
+
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -102,7 +204,7 @@
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
+
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
