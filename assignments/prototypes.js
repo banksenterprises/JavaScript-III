@@ -99,9 +99,6 @@ console.log(dory.play());
 
 // GameObject Constructor
 function GameObject(gameAttributes) {
-    this.createdAt = gameAttributes.createdAt;
-    this.name = gameAttributes.name;
-    this.dimensions = gameAttributes.dimensions;
 }
 
 // method for GameObject
@@ -111,8 +108,11 @@ GameObject.prototype.destroy = function () {
 
 // CharacterStats Constructor
 function CharacterStats(characterAttributes) {
-  this.healthPoints = characterAttributes.healthPoints;
   GameObject.call(this, CharacterStats);
+    this.name = characterAttributes.name;
+    this.createdAt = characterAttributes.createdAt;
+    this.dimensions = characterAttributes.dimensions;
+    this.healthPoints = characterAttributes.healthPoints;
 }
 
 // Inheritance I
@@ -125,10 +125,10 @@ CharacterStats.prototype.takeDamage = function () {
 
 // Humanoid Constructor
 function Humanoid(humanAttributes) {
-  this.team = humanAttributes.team;
-  this.weapons = humanAttributes.weapons;
-  this.language = humanAttributes.language;
   CharacterStats.call(this, humanAttributes);
+    this.team = humanAttributes.team;
+    this.weapons = humanAttributes.weapons;
+    this.language = humanAttributes.language;
 }
 
 // Inheritance II
@@ -139,9 +139,7 @@ Humanoid.prototype.greet = function (){
   return `${this.name} offers a greeting in ${this.language}.`
 };
 
-const date = {
-  today: `today is `
-}
+// const todayDate = 
 
 
   const mage = new Humanoid({
